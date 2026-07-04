@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Cleanup and Verify After Code Generation",
+      "trigger": "PostToolUse",
+      "description": "Automatically cleans up, refactors, and checks for compilation errors whenever code is generated or modified.",
+      "matcher": "fs_write|str_replace|fs_append",
+      "action": {
+        "type": "agent",
+        "prompt": "EXCLUSIONS — Skip this hook entirely (do nothing) if the file that was just written or modified matches ANY of these patterns:\n- Files inside `.kiro/` (hooks, agents, steering, skills, summaries, settings)\n- Markdown files (`*.md`)\n- JSON config files (`*.json`) such as package.json, tsconfig.json, hook definitions, etc.\n- YAML files (`*.yml`, `*.yaml`)\n- TOML files (`*.toml`)\n- Environment files (`*.env`, `.env.*`)\n- Lock files (`package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `Cargo.lock`, etc.)\n- Git metadata files (`.gitignore`, `.gitattributes`)\n- License and changelog files (`LICENSE`, `CHANGELOG*`)\n- Image, font, or binary files (`*.png`, `*.jpg`, `*.svg`, `*.ico`, `*.woff`, `*.woff2`)\n- Generated or vendored directories (`node_modules/`, `dist/`, `build/`, `.next/`, `target/`)\n\nIf the file does NOT match any exclusion above, perform the following steps:\n1. Review the written code for cleanup opportunities — remove dead code, unused imports, and unnecessary comments.\n2. Refactor where appropriate — improve naming, extract repeated logic, simplify overly complex expressions.\n3. Check for compilation or syntax errors by running the project's build/compile command if available, or by carefully reviewing the code for type errors, missing imports, and invalid syntax.\nReport any issues found and fix them before moving on."
+      }
+    }
+  ]
+}
