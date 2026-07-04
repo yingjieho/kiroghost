@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Update README and Steering Before Push",
+      "trigger": "PreToolUse",
+      "description": "Before a git push to a remote branch, updates README.md and .kiro/steering files to reflect the current project state.",
+      "matcher": "execute_pwsh",
+      "action": {
+        "type": "agent",
+        "prompt": "CONDITION — Only run this hook if the command being executed is a `git push` (i.e., the command string contains \"git push\"). If it is NOT a git push command, skip this hook entirely and proceed with the tool call unchanged.\n\nIf it IS a git push command, perform the following BEFORE allowing the push to proceed:\n\n1. UPDATE README.md — Review the current README.md and update it to include:\n   - Project summary: a brief one-paragraph overview of what the project is and what it does.\n   - Project description: a more detailed explanation of the project's purpose, goals, and scope.\n   Keep it concise and developer-friendly. Only update if the summary or description no longer accurately reflects the codebase.\n\n2. UPDATE STEERING FILES — Create or update files in `.kiro/steering/` to capture project conventions and context:\n   - `.kiro/steering/project-overview.md` — High-level description of the project architecture, tech stack, and key design decisions. Add front-matter with `inclusion: auto`.\n   - `.kiro/steering/coding-standards.md` — Coding conventions, naming patterns, and style guidelines observed in the codebase. Add front-matter with `inclusion: auto`.\n\nOnly update sections that are affected by recent code changes. Do not rewrite unchanged sections. After updating the files, stage them and amend the last commit (or create a new commit with message \"Docs: Update README and steering files\") so they are included in the push."
+      }
+    }
+  ]
+}
