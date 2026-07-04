@@ -4,26 +4,28 @@ inclusion: auto
 
 # Coding Standards
 
-## General Conventions
+## File Organisation
 
-- Use descriptive names for files, agents, hooks, and steering docs.
-- Keep hook prompts focused — each hook should have a single clear responsibility.
-- Use JSON for hook definitions and Markdown for agents and steering files.
+- Agent definitions go in `.kiro/agents/` as markdown files with YAML front-matter (name, description, tools).
+- Skills go in `.kiro/skills/` as markdown files with `inclusion: manual` front-matter.
+- Hooks go in `.kiro/hooks/` as JSON files created via the `createHook` tool.
+- Steering files go in `.kiro/steering/` as markdown with `inclusion: auto` or `inclusion: manual` front-matter.
 
-## Hook Design
+## Naming Conventions
 
-- Hooks should include clear CONDITION or EXCLUSION sections at the top of their prompts.
-- Use matchers to limit hook scope to relevant tool invocations.
-- Prefer `agent` action type for prompts that guide behavior; use `command` for shell-based automation.
+- Use kebab-case for all `.kiro/` file names (e.g., `business-analyst.md`, `git-commit-approval.json`).
+- Use descriptive, role-based names for agents and skills (e.g., `business-analyst`, `data-engineer`).
+- Hook IDs should describe their purpose concisely (e.g., `git-commit-approval`, `lint-on-save`).
 
-## Steering Files
+## Documentation Style
 
-- Always include `inclusion: auto` front-matter for files that should be loaded in every session.
-- Keep steering content concise and actionable — avoid verbose explanations.
-- Update steering files when project structure or conventions change.
+- Use British English spelling in documentation and agent prompts (e.g., "analyse", "organisation").
+- Structure markdown with clear headings, tables for reference data, and bullet lists for enumeration.
+- Keep front-matter minimal — only include required fields.
 
-## Git Workflow
+## Git Conventions
 
-- Use descriptive commit messages with category prefixes: `Init:`, `Feat:`, `Fix:`, `Refactor:`, `Docs:`, `Chore:`.
-- Keep commits focused on a single concern.
-- Update README and steering docs before pushing to remote.
+- Commit message prefixes: `Init:`, `Feat:`, `Fix:`, `Refactor:`, `Docs:`, `Kiro:`, `Chore:`
+- Use `Kiro:` prefix for all changes to `.kiro/` directory contents.
+- Stage specific files rather than using `git add .`.
+- Subject lines under 72 characters.

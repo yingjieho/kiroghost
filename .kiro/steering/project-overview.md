@@ -6,20 +6,20 @@ inclusion: auto
 
 ## Purpose
 
-Kiroghost is a Kiro IDE workspace configured with custom AI agents, hooks, and automation for AI-powered development workflows.
+Kiroghost is a Kiro IDE workspace configured with custom AI agents, hooks, skills, and steering files to streamline AI-powered development workflows.
 
 ## Architecture
 
-The project is structured around Kiro's `.kiro/` configuration directory:
+The project is structured around the `.kiro/` configuration directory:
 
-- **Agents** (`.kiro/agents/`): Custom agent definitions with specialized capabilities. Currently includes an `ai-engineer` agent for building AI tools, applications, MCP servers, and development infrastructure.
-- **Hooks** (`.kiro/hooks/`): Automated triggers that fire on IDE events. Includes:
-  - `cleanup-after-codegen.json` — Cleans up, refactors, and checks for errors after code generation.
-  - `update-readme-and-steering.json` — Updates README and steering docs before pushing to remote.
-- **Steering** (`.kiro/steering/`): Always-included context files that guide agent behavior with project conventions and architecture knowledge.
+- **Agents** (`.kiro/agents/`) — Custom sub-agent definitions that can be invoked for specialised tasks (AI engineering, business analysis).
+- **Skills** (`.kiro/skills/`) — Manually activatable expertise profiles that augment agent sessions with domain-specific knowledge.
+- **Hooks** (`.kiro/hooks/`) — Event-driven automation that enforces workflows (commit approval gates, documentation sync, code cleanup).
+- **Steering** (`.kiro/steering/`) — Persistent context and conventions included in agent interactions.
+- **Specs** (`.kiro/specs/`) — Structured feature specifications with requirements, design, and implementation tasks.
 
-## Tech Stack
+## Key Design Decisions
 
-- Kiro IDE with custom agent and hook configurations
-- Git for version control
-- Markdown and JSON for configuration
+- Agents and skills are separated: agents are autonomous sub-agents invoked for delegation, while skills are context injections that augment the current session.
+- Hooks enforce quality gates (commit message approval) and automation (README/steering updates on push, code cleanup on file save).
+- Git conventions are codified in steering to ensure consistent commit messages and branch workflows.
