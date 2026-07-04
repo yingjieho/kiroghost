@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Approve Commit Message Before Commit",
+      "trigger": "PreToolUse",
+      "description": "Intercepts git commit commands and requires human approval of the commit message before allowing the commit to proceed. Once approved, the changes can be pushed.",
+      "matcher": "execute_pwsh",
+      "action": {
+        "type": "agent",
+        "prompt": "Before executing this command, check if it contains \"git commit\". If it does, you MUST stop and present the commit message to the user for approval BEFORE executing the commit. Extract the commit message from the command (the -m flag value) and ask: \"Here's the commit message I've prepared: `<message>`. Approve to commit?\" Do NOT proceed with the git commit until the user explicitly approves. If the user rejects, ask what they'd like to change and revise the commit message accordingly. Once the commit is approved and executed, the changes can be pushed without further approval. If the command does not contain \"git commit\", allow it to proceed normally without intervention."
+      }
+    }
+  ]
+}
